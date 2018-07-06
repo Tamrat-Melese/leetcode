@@ -17,22 +17,28 @@ class Solution {
      public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         return addTwoNumbers(l1, l2, 0);
     }
+    
     public ListNode addTwoNumbers(ListNode l1, ListNode l2, int carryOver) {
-    	if (l1 == null && l2 == null){
+    	if (l1 == null && l2 == null && carryOver == 0){
             return null;
         }
-        else if (l1 == null){
+        else if (l1 == null && carryOver == 0){
             return l2;
         }
-        else if(l2 == null){
+        else if(l2 == null && carryOver == 0){
             return l1;
         }
         else {
-        	int sum = l1.val + l2.val + carryOver ;
+            int val1 = (l1 != null)? l1.val : 0;
+            int val2 = (l2 != null)? l2.val : 0;
+        	int sum = val1 + val2 + carryOver ;
             int remainder = sum % 10;
             carryOver = sum / 10;
             ListNode result = new ListNode(remainder );
-            result.next = addTwoNumbers(l1.next, l2.next, carryOver);
+            
+            l1 = (l1 != null)? l1.next : l1;
+            l2 = (l2 != null)? l2.next : l2;
+            result.next = addTwoNumbers(l1, l2, carryOver);
             return result;
         }
     }
